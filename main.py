@@ -1,9 +1,8 @@
-import pygame, sys, random
+import pygame, sys, random, time
 from pygame.locals import *
 pygame.init()#initates pygame
-WINDOW_SIZE = (600,400)
 clock = pygame.time.Clock()#imports the time
-screen = pygame.display.set_mode(WINDOW_SIZE,0,32)#initate the WINDOW_SIZE
+screen = pygame.display.set_mode((600,400))#initate the WINDOW_SIZE
 
 asteroids = []
 
@@ -12,7 +11,7 @@ class Asteroid:
     self.pos = [pos_x, pos_y]
   def update(num):
     for i in range(num):
-      asteroid_location = Asteroid(random.randint(0,568), random.randint(400,4000))
+      asteroid_location = Asteroid(random.randint(565,568), random.randint(400,4000))#change this
       asteroids.append(asteroid_location)
 
 
@@ -33,12 +32,12 @@ moving_down = False
 moving_up = False
 running = True
 player_location = [50,50]#sets starting
-
+Asteroid.update(15)
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(), player_image.get_height())#playerhitbox
 
 test_rect = pygame.Rect(100,100,100,50)#testing retangle hitbox
 
-Asteroid.update(15)
+
 
 #moving around minigame
 while running:
@@ -50,15 +49,30 @@ while running:
   player_rect.x = player_location[0]
   player_rect.y = player_location[1]
 
-  if player_rect.colliderect(test_rect):
-    pygame.draw.rect(screen, (255,0,0), test_rect)
-  else:
-    pygame.draw.rect(screen, (0,0,0), test_rect)
+    
+
+  #asteroid_rect.x = Asteroid.pos[0] #update the asteroid location
+  #asteroid_rect.y = Asteroid.pos[1]
+
+  if player_rect.colliderect(asteroid_rect):
+    
+    print("hit")
+  if asteroid_rect.colliderect(player_rect):
+    
+    print("hit")
+    
+    
 
 
   for asteroid_location in asteroids:
+    asteroid_rect = pygame.Rect(asteroid_location.pos[0], asteroid_location.pos[1], asteroid_image.get_width(), asteroid_image.get_height())
     screen.blit(asteroid_image, asteroid_location.pos)#astriod location
-    asteroid_location.pos[1] -= 6
+    asteroid_location.pos[1] -= 6#IMPORTANT!!!!!!!! HOW TO GET THE X AND Y VARIABLES FROM OBJECT TYPE BEAT
+    asteroid_rect.x = asteroid_location.pos[0]
+    asteroid_rect.y = asteroid_location.pos[1]
+    
+
+
 
 
 
@@ -96,7 +110,7 @@ while running:
         moving_up = False
   
   
-  if player_location[0] <= 0:#boundries in the game
+  if player_location[0] <= 0:#boundries in the game for x axis
     player_location[0] = 0
   elif player_location[0] >= 568:
     player_location[0] = 568
