@@ -1,17 +1,17 @@
-import pygame, sys, random, time
+import pygame, sys, random
 from pygame.locals import *
 pygame.init()#initates pygame
 clock = pygame.time.Clock()#imports the time
 screen = pygame.display.set_mode((600,400))#initate the WINDOW_SIZE
 
-asteroids = []
+asteroids = []#THIS WILL HOLD ALL THE OBJECTS
 
 class Asteroid:
-  def __init__(self, pos_x, pos_y):
+  def __init__(self, pos_x, pos_y):#THE TWO THINGYS INSIDE THE OBJCET
     self.pos = [pos_x, pos_y]
   def update(num):
     for i in range(num):
-      asteroid_location = Asteroid(random.randint(565,568), random.randint(400,4000))#change this
+      asteroid_location = Asteroid(random.randint(0,568), random.randint(400,4000))#change this
       asteroids.append(asteroid_location)
 
 
@@ -31,11 +31,12 @@ moving_left = False
 moving_down = False
 moving_up = False
 running = True
+damage = 0
+num_of_asteroids = 15
 player_location = [50,50]#sets starting
-Asteroid.update(15)
+Asteroid.update(num_of_asteroids)
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(), player_image.get_height())#playerhitbox
 
-test_rect = pygame.Rect(100,100,100,50)#testing retangle hitbox
 
 
 
@@ -46,20 +47,12 @@ while running:
   screen.blit(player_image,player_location)#player location
 
 
-  player_rect.x = player_location[0]
+  player_rect.x = player_location[0]#updates the playerlocaiton hitbox to follow the player image
   player_rect.y = player_location[1]
 
-    
 
-  #asteroid_rect.x = Asteroid.pos[0] #update the asteroid location
-  #asteroid_rect.y = Asteroid.pos[1]
 
-  if player_rect.colliderect(asteroid_rect):
-    
-    print("hit")
-  if asteroid_rect.colliderect(player_rect):
-    
-    print("hit")
+  
     
     
 
@@ -70,10 +63,13 @@ while running:
     asteroid_location.pos[1] -= 6#IMPORTANT!!!!!!!! HOW TO GET THE X AND Y VARIABLES FROM OBJECT TYPE BEAT
     asteroid_rect.x = asteroid_location.pos[0]
     asteroid_rect.y = asteroid_location.pos[1]
+    if player_rect.colliderect(asteroid_rect):
+      damage += 1
+    
     
 
 
-
+  
 
 
   if moving_right:
