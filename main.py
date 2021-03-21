@@ -62,14 +62,6 @@ rocket.rect.y = 0  # go to y
 rocket_list = pygame.sprite.Group()
 rocket_list.add(rocket)
 steps = 4
-    
-
-  
-
-
-#loading images and setting display
-
-
 
 
 #variables
@@ -102,7 +94,7 @@ def button_input():
       
       if event.type == KEYDOWN:#movemtnt code
         if event.key == K_RIGHT:
-        rocket.control(steps, 0)
+          rocket.control(steps, 0)
         if event.key == K_LEFT:
           rocket.control(-steps, 0)
         if event.key == K_DOWN:
@@ -131,7 +123,7 @@ while running:
   
   asteroid_collison()
 
-  
+  button_input()
 
   damage_display = myFont.render(str(damage), 1, black)#shows score
   screen.blit(damage_display, (520, 30))
