@@ -16,8 +16,6 @@ rocket_image = pygame.image.load("player.png")
 pygame.display.set_icon(icon)
 
 
-
-
 class Asteroid:#asteroid class
   def __init__(self, pos_x, pos_y):#THE TWO THINGYS INSIDE THE OBJCET
     self.pos = [pos_x, pos_y]
@@ -25,10 +23,6 @@ class Asteroid:#asteroid class
     for i in range(num):#making all the 
       asteroid_location = Asteroid(random.randint(0,568), random.randint(400,4000))#change this
       asteroids.append(asteroid_location)
-
-
-    
-
 
 
 class Rocket(pygame.sprite.Sprite):#using pygames sprite function for future aninmations
@@ -70,7 +64,8 @@ damage = 0
 num_of_asteroids = 15
 
 
-rocket_rect = pygame.Rect(rocket.rect.x, rocket.rect.y, rocket_image.get_width(), rocket_image.get_height())#playerhitbox
+#playerhitbox
+
 myFont = pygame.font.SysFont("Times New Roman", 18)
 Asteroid.update(num_of_asteroids)
 def asteroid_collison():
@@ -114,12 +109,13 @@ def button_input():
 
 #moving around minigame
 while running:
+  rocket_rect = pygame.Rect(rocket.rect.x, rocket.rect.y, rocket_image.get_width(), rocket_image.get_height())
   pygame.display.update()
   screen.fill((146,244,255))
-  
+  print(rocket_rect)
   rocket.update()
   rocket_list.draw(screen)
-  print(rocket.rect.x, rocket.rect.y)
+  #print(rocket.rect.x, rocket.rect.y)
   
   asteroid_collison()
 
@@ -127,9 +123,6 @@ while running:
 
   damage_display = myFont.render(str(damage), 1, black)#shows score
   screen.blit(damage_display, (520, 30))
-
-  
-
   
   if rocket.rect.x <= 0:#boundries in the game for x axis
     rocket.rect.x = 0
